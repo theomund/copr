@@ -15,25 +15,17 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 ---
-name: linux
-run-name: Linux Workflow
-"on": [push]
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Container Registry Login
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Project
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: ghcr.io/theomund/copr/development
-          cacheFrom: ghcr.io/theomund/copr/development
-          push: always
-          runCmd: just all
+  - job: copr_build
+    trigger: pull_request
+    targets:
+      - fedora-41-x86_64
+
+packages:
+  limine:
+    files_to_sync:
+      - limine.spec
+    paths:
+      - ./limine
+    specfile_path: limine.spec
+    upstream_package_name: limine

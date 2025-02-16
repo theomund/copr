@@ -14,26 +14,5 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
----
-name: linux
-run-name: Linux Workflow
-"on": [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Container Registry Login
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Project
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: ghcr.io/theomund/copr/development
-          cacheFrom: ghcr.io/theomund/copr/development
-          push: always
-          runCmd: just all
+prepare_sources_result*/
+.vale/

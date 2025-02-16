@@ -17,6 +17,7 @@
 FROM quay.io/fedora/fedora:41
 RUN dnf copr enable -y mczernek/vale 
 RUN dnf install -y \
+    bash-completion-2.16 \
     git-2.48.1 \
     just-1.39.0 \
     packit-0.106.0 \

@@ -14,26 +14,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
----
-name: linux
-run-name: Linux Workflow
-"on": [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Container Registry Login
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Project
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: ghcr.io/theomund/copr/development
-          cacheFrom: ghcr.io/theomund/copr/development
-          push: always
-          runCmd: just all
+Name:       limine
+Version:    8.7.0
+Release:    1
+Summary:    Modern, advanced, portable, multiprotocol bootloader and boot manager.
+License:    BSD-2-Clause
+
+%description
+Limine is a modern, advanced, portable, multiprotocol bootloader and boot manager, also used as the reference implementation for the Limine boot protocol.
+
+%prep
+
+%build
+
+%install
+
+%files
+
+%changelog

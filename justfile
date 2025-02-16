@@ -14,18 +14,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# Build the project source code.
-build:
-    @echo "To be implemented."
-
-# Clean the project source tree.
-clean:
-    @echo "To be implemented."
+# Run all CI/CD stages.
+all: lint
 
 # Run the project linters.
-lint:
-    @echo "To be implemented."
+lint: packit rpmlint vale yamllint
 
-# Run the project test suite.
-test:
-    @echo "To be implemented."
+# Run the Packit linter.
+packit:
+    packit validate-config
+
+# Run the RPM linter.
+rpmlint:
+    rpmlint limine/limine.spec
+
+# Run the prose linter.
+vale:
+    vale sync
+    vale README.md
+
+# Run the YAML linter.
+yamllint:
+    yamllint .github/workflows .packit.yml
+
