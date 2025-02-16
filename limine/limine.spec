@@ -16,19 +16,27 @@
 
 Name:       limine
 Version:    8.7.0
-Release:    1
+Release:    1%{?dist}
 Summary:    Modern, advanced, portable, multiprotocol bootloader and boot manager.
+URL:        https://limine-bootloader.org
+Source:     https://github.com/limine-bootloader/limine/archive/refs/tags/v%{version}-binary.tar.gz
 License:    BSD-2-Clause
 
 %description
 Limine is a modern, advanced, portable, multiprotocol bootloader and boot manager, also used as the reference implementation for the Limine boot protocol.
 
 %prep
+%autosetup -n %{name}-%{version}
 
 %build
+%make_build
 
 %install
+%make_install
 
 %files
+%{_bindir}/limine
+%{_datadir}/limine/
+%{_includedir}/limine.h
 
 %changelog

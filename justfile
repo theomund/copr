@@ -36,4 +36,3 @@ vale:
 # Run the YAML linter.
 yamllint:
     yamllint .github/workflows .packit.yml
-
