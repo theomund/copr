@@ -32,4 +32,5 @@ packages:
       fix-spec-file: []
     paths:
       - ./limine
+    release_suffix: dev
     specfile_path: limine.spec
