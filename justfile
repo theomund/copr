@@ -15,18 +15,21 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 # Run all CI/CD stages.
-all: lint
+all: lint build
 
-# Build the project source.
-build: srpm rpm copr
+# Build the project packages.
+build: srpm rpm
 
 # Clean the project tree.
 clean:
     git clean -fdx
 
-# Build packages within COPR.
+# Submit a build within COPR.
 copr:
     packit build in-copr
+
+# Deploy the project packages.
+deploy: copr
 
 # Run the project linters.
 lint: packit rpmlint vale yamllint
