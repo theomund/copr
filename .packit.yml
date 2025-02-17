@@ -23,9 +23,13 @@ jobs:
 
 packages:
   limine:
-    files_to_sync:
-      - limine.spec
+    actions:
+      get-current-version:
+        - bash -c "rpmspec -q --queryformat '%{VERSION}\n' limine.spec | head -n 1"
+      create-archive:
+        - bash -c "wget2 -O limine-${PACKIT_PROJECT_VERSION}-binary.tar.gz https://github.com/limine-bootloader/limine/archive/refs/tags/v${PACKIT_PROJECT_VERSION}-binary.tar.gz"
+        - bash -c "ls -1 limine-${PACKIT_PROJECT_VERSION}-binary.tar.gz"
+      fix-spec-file: []
     paths:
       - ./limine
     specfile_path: limine.spec
-    upstream_package_name: limine

@@ -15,5 +15,6 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 .vale/
-*.tar.gz
-prepare_sources_result*/
+limine-*
+SRPMS/
+x86_64/

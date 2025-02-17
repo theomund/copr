@@ -18,10 +18,13 @@ FROM quay.io/fedora/fedora:41
 RUN dnf copr enable -y mczernek/vale 
 RUN dnf install -y \
     bash-completion-2.16 \
+    gcc-14.2.1 \
     git-2.48.1 \
     just-1.39.0 \
+    make-4.4.1 \
     packit-0.106.0 \
     vale-3.9.5 \
+    wget2-2.2.0 \
     yamllint-1.35.1 \
     && dnf clean all
 RUN useradd -m developer

@@ -14,25 +14,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-Name:       limine
-Version:    8.7.0
-Release:    1%{?dist}
-Summary:    Modern, advanced, portable, multiprotocol bootloader and boot manager.
-URL:        https://limine-bootloader.org
-Source:     https://github.com/limine-bootloader/limine/archive/refs/tags/v%{version}-binary.tar.gz
-License:    BSD-2-Clause
+Name:          limine
+Version:       9.0.0
+Release:       %autorelease
+Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
+URL:           https://limine-bootloader.org
+Source:        file://%{name}-%{version}-binary.tar.gz
+License:       BSD-2-Clause
+BuildRequires: gcc make
 
 %description
-Limine is a modern, advanced, portable, multiprotocol bootloader and boot manager, also used as the reference implementation for the Limine boot protocol.
+%{summary}
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n %{name}-%{version}-binary
 
 %build
 %make_build
 
 %install
-%make_install
+%make_install PREFIX=%{_prefix}
 
 %files
 %{_bindir}/limine
@@ -40,3 +41,4 @@ Limine is a modern, advanced, portable, multiprotocol bootloader and boot manage
 %{_includedir}/limine.h
 
 %changelog
+%autochangelog
