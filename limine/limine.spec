@@ -14,26 +14,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
----
-name: linux
-run-name: Linux Workflow
-"on": [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Container Registry Login
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Project
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: ghcr.io/theomund/copr/development
-          cacheFrom: ghcr.io/theomund/copr/development
-          push: always
-          runCmd: just all
+Name:          limine
+Version:       9.0.0
+Release:       %autorelease
+Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
+URL:           https://limine-bootloader.org
+Source:        file://%{name}-%{version}-binary.tar.gz
+License:       BSD-2-Clause
+BuildRequires: gcc make
+
+%description
+%{summary}
+
+%prep
+%autosetup -n %{name}-%{version}-binary
+
+%build
+%make_build
+
+%install
+%make_install PREFIX=%{_prefix}
+
+%files
+%{_bindir}/limine
+%{_datadir}/limine/
+%{_includedir}/limine.h
+
+%changelog
+%autochangelog
