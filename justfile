@@ -14,18 +14,51 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# Build the project source code.
-build:
-    @echo "To be implemented."
+# Run all CI/CD stages.
+all: lint build
 
-# Clean the project source tree.
+# Build the project packages.
+build: (rpm "limine")
+
+# Clean the project tree.
 clean:
-    @echo "To be implemented."
+    git clean -fdx
+
+# Submit a build within COPR.
+copr package: (srpm package)
+    copr-cli build theomund/copr target/SRPMS/{{ package }}-*.src.rpm
+
+# Deploy the project packages.
+deploy: (copr "limine")
 
 # Run the project linters.
-lint:
-    @echo "To be implemented."
+lint: rpmlint vale yamllint
 
-# Run the project test suite.
-test:
-    @echo "To be implemented."
+# Build an RPM package.
+rpm package: (srpm package)
+    rpmbuild --rebuild --define "_topdir $(pwd)/target" target/SRPMS/{{ package }}-*.src.rpm
+
+# Run the RPM linter.
+rpmlint:
+    rpmlint src/
+
+# Retrieve the RPM source archive.
+source package: setup
+    spectool -Rg --define "_topdir $(pwd)/target" src/{{ package }}.spec
+
+# Build a source RPM package.
+srpm package: (source package)
+    rpmbuild -bs --define "_topdir $(pwd)/target" src/{{ package }}.spec
+
+# Setup the RPM build tree.
+setup:
+    mkdir -p target/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+
+# Run the prose linter.
+vale:
+    vale sync
+    vale README.md
+
+# Run the YAML linter.
+yamllint:
+    yamllint .github/workflows/

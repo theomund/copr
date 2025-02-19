@@ -14,19 +14,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-FROM quay.io/fedora/fedora:41
-RUN dnf copr enable -y mczernek/vale 
-RUN dnf install -y \
-    bash-completion-2.16 \
-    copr-cli-2.0 \
-    gcc-14.2.1 \
-    git-2.48.1 \
-    just-1.39.0 \
-    make-4.4.1 \
-    rpmdevtools-9.6 \
-    rpmlint-2.5.0 \
-    vale-3.9.5 \
-    yamllint-1.35.1 \
-    && dnf clean all
-RUN useradd -m developer
-USER developer
+Name:          limine
+Version:       9.0.0
+Release:       1%{?dist}
+Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
+URL:           https://limine-bootloader.org
+Source:        https://github.com/limine-bootloader/limine/archive/refs/tags/v%{version}-binary.tar.gz
+License:       BSD-2-Clause
+BuildRequires: gcc make
+
+%description
+%{summary}
+
+%prep
+%autosetup -n %{name}-%{version}-binary
+
+%build
+%make_build
+
+%install
+%make_install PREFIX=%{_prefix}
+
+%files
+%{_bindir}/limine
+%{_datadir}/limine/
+%{_includedir}/limine.h
+
+%changelog
+* Tue Feb 18 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.0.0-1
+- Initial package.
