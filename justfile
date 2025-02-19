@@ -34,7 +34,7 @@ deploy: (copr "limine")
 # Run the project linters.
 lint: rpmlint vale yamllint
 
-# Build a RPM package.
+# Build an RPM package.
 rpm package: (srpm package)
     rpmbuild --rebuild --define "_topdir $(pwd)/target" target/SRPMS/{{ package }}-*.src.rpm
 
