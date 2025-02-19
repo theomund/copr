@@ -18,37 +18,41 @@
 all: lint build
 
 # Build the project packages.
-build: srpm rpm
+build: (rpm "limine")
 
 # Clean the project tree.
 clean:
     git clean -fdx
 
 # Submit a build within COPR.
-copr:
-    packit build in-copr
+copr package: (srpm package)
+    copr-cli build theomund/copr target/SRPMS/{{ package }}-*.src.rpm
 
 # Deploy the project packages.
-deploy: copr
+deploy: (copr "limine")
 
 # Run the project linters.
-lint: packit rpmlint vale yamllint
+lint: rpmlint vale yamllint
 
-# Run the Packit linter.
-packit:
-    packit validate-config
-
-# Build the RPM packages.
-rpm:
-    packit build locally
+# Build a RPM package.
+rpm package: (srpm package)
+    rpmbuild --rebuild --define "_topdir $(pwd)/target" target/SRPMS/{{ package }}-*.src.rpm
 
 # Run the RPM linter.
 rpmlint:
-    rpmlint .
+    rpmlint src/
 
-# Build the source RPM packages.
-srpm:
-    packit srpm
+# Retrieve the RPM source archive.
+source package: setup
+    spectool -Rg --define "_topdir $(pwd)/target" src/{{ package }}.spec
+
+# Build a source RPM package.
+srpm package: (source package)
+    rpmbuild -bs --define "_topdir $(pwd)/target" src/{{ package }}.spec
+
+# Setup the RPM build tree.
+setup:
+    mkdir -p target/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 
 # Run the prose linter.
 vale:
@@ -57,4 +61,4 @@ vale:
 
 # Run the YAML linter.
 yamllint:
-    yamllint .github/workflows .packit.yml
+    yamllint .github/workflows/

@@ -15,6 +15,4 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 .vale/
-limine-*
-SRPMS/
-x86_64/
+target/

@@ -14,25 +14,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
----
-jobs:
-  - job: copr_build
-    trigger: pull_request
-    targets:
-      - fedora-41-x86_64
+Name:          limine
+Version:       9.0.0
+Release:       1%{?dist}
+Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
+URL:           https://limine-bootloader.org
+Source:        https://github.com/limine-bootloader/limine/archive/refs/tags/v%{version}-binary.tar.gz
+License:       BSD-2-Clause
+BuildRequires: gcc make
 
-packages:
-  limine:
-    actions:
-      get-current-version:
-        - bash -c "rpmspec -q --queryformat '%{VERSION}\n' limine.spec | head -n 1"
-      create-archive:
-        - bash -c "wget2
-          -O limine-${PACKIT_PROJECT_VERSION}-binary.tar.gz
-          https://github.com/limine-bootloader/limine/archive/refs/tags/v${PACKIT_PROJECT_VERSION}-binary.tar.gz"
-        - bash -c "ls -1 limine-${PACKIT_PROJECT_VERSION}-binary.tar.gz"
-      fix-spec-file: []
-    paths:
-      - ./limine
-    release_suffix: dev
-    specfile_path: limine.spec
+%description
+%{summary}
+
+%prep
+%autosetup -n %{name}-%{version}-binary
+
+%build
+%make_build
+
+%install
+%make_install PREFIX=%{_prefix}
+
+%files
+%{_bindir}/limine
+%{_datadir}/limine/
+%{_includedir}/limine.h
+
+%changelog
+* Tue Feb 18 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.0.0-1
+- Initial package.
