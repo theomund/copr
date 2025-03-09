@@ -1,5 +1,9 @@
 # COPR
 
+![Build](https://img.shields.io/github/actions/workflow/status/theomund/copr/linux.yml?style=for-the-badge&logo=linux&logoColor=white)
+![License](https://img.shields.io/github/license/theomund/copr?style=for-the-badge&logo=gnu&logoColor=white&color=mediumorchid)
+![Version](https://img.shields.io/badge/version-0.1.1-blue?style=for-the-badge&logo=github&logoColor=white)
+
 Packages for Fedora COPR.
 
 ## License
