@@ -24,8 +24,8 @@ RUN dnf install -y \
     just-1.39.0 \
     make-4.4.1 \
     rpmdevtools-9.6 \
-    rpmlint-2.5.0 \
-    vale-3.9.5 \
+    rpmlint-2.6.1 \
+    vale-3.9.6 \
     yamllint-1.35.1 \
     && dnf clean all
 RUN useradd -m developer
