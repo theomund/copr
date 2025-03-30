@@ -20,13 +20,13 @@ RUN dnf install -y \
     bash-completion-2.16 \
     copr-cli-2.0 \
     gcc-14.2.1 \
-    git-2.48.1 \
-    just-1.39.0 \
+    git-2.49.0 \
+    just-1.40.0 \
     make-4.4.1 \
     rpmdevtools-9.6 \
     rpmlint-2.6.1 \
     vale-3.9.6 \
-    yamllint-1.35.1 \
+    yamllint-1.37.0 \
     && dnf clean all
 RUN useradd -m developer
 USER developer
