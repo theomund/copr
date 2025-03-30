@@ -15,7 +15,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Name:          limine
-Version:       9.1.0
+Version:       9.2.1
 Release:       1%{?dist}
 Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
 URL:           https://limine-bootloader.org
@@ -43,6 +43,8 @@ BuildRequires: gcc make
 %{_includedir}/limine.h
 
 %changelog
+* Sun Mar 30 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.1-1
+- Bump version to the 9.2.1 release.
 * Sun Mar 09 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.1.0-1
 - Bump version to the 9.1.0 release.
 * Tue Feb 18 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.0.0-1
