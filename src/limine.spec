@@ -15,13 +15,15 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Name:          limine
-Version:       9.2.1
+Version:       9.2.3
 Release:       1%{?dist}
 Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
-URL:           https://limine-bootloader.org
-Source:        https://github.com/limine-bootloader/limine/archive/refs/tags/v%{version}-binary.tar.gz
+URL:           https://%{name}-bootloader.org
+Source:        https://github.com/%{name}-bootloader/%{name}/archive/refs/tags/v%{version}-binary.tar.gz
 License:       BSD-2-Clause
 BuildRequires: gcc make
+
+%global debug_package %{nil}
 
 %description
 %{summary}
@@ -38,11 +40,13 @@ BuildRequires: gcc make
 %make_install PREFIX=%{_prefix}
 
 %files
-%{_bindir}/limine
-%{_datadir}/limine/
-%{_includedir}/limine.h
+%{_bindir}/%{name}
+%{_datadir}/%{name}/
+%{_includedir}/%{name}.h
 
 %changelog
+* Wed Apr 23 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.3-1
+- Bump version to the 9.2.3 release.
 * Sun Mar 30 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.1-1
 - Bump version to the 9.2.1 release.
 * Sun Mar 09 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.1.0-1
