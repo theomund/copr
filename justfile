@@ -18,7 +18,7 @@
 all: lint build
 
 # Build the project packages.
-build: (rpm "erlang") (rpm "limine") (rpm "vale")
+build: (rpm "erlang") (rpm "gleam") (rpm "limine") (rpm "vale")
 
 # Clean the project tree.
 clean:
@@ -29,7 +29,7 @@ copr package: (srpm package)
     copr-cli build theomund/copr target/SRPMS/{{ package }}-*.src.rpm
 
 # Deploy the project packages.
-deploy: (copr "erlang") (copr "limine") (copr "vale")
+deploy: (copr "erlang") (copr "gleam") (copr "limine") (copr "vale")
 
 # Run the project linters.
 lint: rpmlint vale yamllint
