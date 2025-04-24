@@ -23,8 +23,12 @@ RUN dnf install -y \
     git-2.49.0 \
     just-1.40.0 \
     make-4.4.1 \
+    ncurses-devel-6.5 \
+    openssl-devel-3.2.4 \
+    perl-5.40.2 \
     rpmdevtools-9.6 \
     rpmlint-2.7.0 \
+    unixODBC-devel-2.3.12 \
     vale-3.11.2 \
     yamllint-1.37.0 \
     && dnf clean all
