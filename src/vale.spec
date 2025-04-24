@@ -18,7 +18,7 @@ Name:          vale
 Version:       3.11.2
 Release:       1%{?dist}
 Summary:       Command-line tool that brings code-like linting to prose
-URL:           https://vale.sh
+URL:           https://%{name}.sh
 Source:        https://github.com/errata-ai/%{name}/releases/download/v%{version}/%{name}_%{version}_Linux_64-bit.tar.gz
 License:       MIT
 
