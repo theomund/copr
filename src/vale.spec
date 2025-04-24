@@ -14,19 +14,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-FROM quay.io/fedora/fedora:42
-RUN dnf copr enable -y mczernek/vale
-RUN dnf install -y \
-    bash-completion-2.16 \
-    copr-cli-2.1 \
-    gcc-15.0.1 \
-    git-2.49.0 \
-    just-1.40.0 \
-    make-4.4.1 \
-    rpmdevtools-9.6 \
-    rpmlint-2.7.0 \
-    vale-3.11.2 \
-    yamllint-1.37.0 \
-    && dnf clean all
-RUN useradd -m developer
-USER developer
+Name:          vale
+Version:       3.11.2
+Release:       1%{?dist}
+Summary:       Command-line tool that brings code-like linting to prose
+URL:           https://%{name}.sh
+Source:        https://github.com/errata-ai/%{name}/releases/download/v%{version}/%{name}_%{version}_Linux_64-bit.tar.gz
+License:       MIT
+
+%global debug_package %{nil}
+
+%description
+%{summary}
+
+%prep
+%setup -qc
+
+%build
+
+%check
+
+%install
+mkdir -p %{buildroot}%{_bindir}
+install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
+
+%files
+%{_bindir}/%{name}
+%doc README.md
+%license LICENSE
+
+%changelog
+* Wed Apr 23 2025 Theomund <34360334+theomund@users.noreply.github.com> - 3.11.2-1
+- Initial package.
