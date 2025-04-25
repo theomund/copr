@@ -16,12 +16,12 @@
 
 Name:          limine
 Version:       9.2.3
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
 URL:           https://%{name}-bootloader.org
-Source:        https://github.com/%{name}-bootloader/%{name}/archive/refs/tags/v%{version}-binary.tar.gz
+Source:        https://github.com/%{name}-bootloader/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
 License:       BSD-2-Clause
-BuildRequires: gcc make
+BuildRequires: gawk gcc grep gzip make mtools nasm sed
 
 %global debug_package %{nil}
 
@@ -29,22 +29,25 @@ BuildRequires: gcc make
 %{summary}
 
 %prep
-%autosetup -n %{name}-%{version}-binary
+%autosetup -n %{name}-%{version}
 
 %build
+%configure --enable-bios --enable-bios-cd --enable-uefi-x86-64 --enable-uefi-cd
 %make_build
 
 %check
 
 %install
-%make_install PREFIX=%{_prefix}
+make install-strip DESTDIR=%{buildroot} PREFIX=%{_prefix}
 
 %files
 %{_bindir}/%{name}
-%{_datadir}/%{name}/
-%{_includedir}/%{name}.h
+%{_datadir}/%{name}/*
+%{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Fri Apr 25 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.3-2
+- Build directly from the source code.
 * Wed Apr 23 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.3-1
 - Bump version to the 9.2.3 release.
 * Sun Mar 30 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.1-1
@@ -53,3 +56,14 @@ BuildRequires: gcc make
 - Bump version to the 9.1.0 release.
 * Tue Feb 18 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.0.0-1
 - Initial package.
+
+%package devel
+
+Summary: %{summary}
+
+%description devel
+%{summary}
+
+%files devel
+%{_includedir}/%{name}.h
+%{_docdir}/%{name}/*
