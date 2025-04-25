@@ -19,7 +19,7 @@ Version:       3.11.2
 Release:       2%{?dist}
 Summary:       Command-line tool that brings code-like linting to prose
 URL:           https://%{name}.sh
-Source:        https://github.com/errata-ai/%{name}/archive/refs/tags/v%{version}.zip
+Source:        https://github.com/errata-ai/%{name}/archive/refs/tags/v%{version}.tar.gz
 License:       MIT
 BuildRequires: golang
 
