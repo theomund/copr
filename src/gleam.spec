@@ -16,11 +16,12 @@
 
 Name:          gleam
 Version:       1.10.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Friendly language for building type-safe systems that scale
 URL:           https://%{name}.run
-Source:        https://github.com/%{name}-lang/%{name}/releases/download/v%{version}/%{name}-v%{version}-x86_64-unknown-linux-musl.tar.gz
+Source:        https://github.com/%{name}-lang/%{name}/archive/refs/tags/v%{version}.tar.gz
 License:       Apache-2.0
+BuildRequires: cargo
 Requires:      erlang
 
 %global debug_package %{nil}
@@ -29,19 +30,22 @@ Requires:      erlang
 %{summary}
 
 %prep
-%setup -qc
+%autosetup -n %{name}-%{version}
 
 %build
+%make_build build
 
 %check
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
+install -Dm 755 target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
 %files
 %{_bindir}/%{name}
+%doc README.md
 
 %changelog
+* Fri Apr 25 2025 Theomund <34360334+theomund@users.noreply.github.com> - 1.10.0-2
+- Build directly from the source code.
 * Thu Apr 24 2025 Theomund <34360334+theomund@users.noreply.github.com> - 1.10.0-1
 - Initial package.

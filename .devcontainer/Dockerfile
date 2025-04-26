@@ -18,6 +18,7 @@ FROM quay.io/fedora/fedora:42
 RUN dnf copr enable -y theomund/copr
 RUN dnf install -y \
     bash-completion-2.16 \
+    cargo-1.86.0 \
     copr-cli-2.1 \
     gcc-15.0.1 \
     git-2.49.0 \
