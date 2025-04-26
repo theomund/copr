@@ -15,14 +15,18 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 FROM quay.io/fedora/fedora:42
-RUN dnf copr enable -y mczernek/vale
+RUN dnf copr enable -y theomund/copr
 RUN dnf install -y \
     bash-completion-2.16 \
+    cargo-1.86.0 \
     copr-cli-2.1 \
     gcc-15.0.1 \
     git-2.49.0 \
+    golang-1.24.2 \
     just-1.40.0 \
     make-4.4.1 \
+    mtools-4.0.48 \
+    nasm-2.16.03 \
     ncurses-devel-6.5 \
     openssl-devel-3.2.4 \
     perl-5.40.2 \

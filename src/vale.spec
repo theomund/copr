@@ -16,11 +16,12 @@
 
 Name:          vale
 Version:       3.11.2
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Command-line tool that brings code-like linting to prose
 URL:           https://%{name}.sh
-Source:        https://github.com/errata-ai/%{name}/releases/download/v%{version}/%{name}_%{version}_Linux_64-bit.tar.gz
+Source:        https://github.com/errata-ai/%{name}/archive/refs/tags/v%{version}.tar.gz
 License:       MIT
+BuildRequires: golang
 
 %global debug_package %{nil}
 
@@ -28,15 +29,20 @@ License:       MIT
 %{summary}
 
 %prep
-%setup -qc
+%autosetup -n %{name}-%{version}
 
 %build
+export CGO_CPPFLAGS="${CPPFLAGS}"
+export CGO_CFLAGS="${CFLAGS}"
+export CGO_CXXFLAGS="${CXXFLAGS}"
+export CGO_LDFLAGS="${LDFLAGS}"
+go build -ldflags="-compressdwarf=false -linkmode external -s -w -X main.version=%{version}" -o build/ ./cmd/...
 
 %check
+go test ./...
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
+install -Dm 755 build/%{name} %{buildroot}%{_bindir}/%{name}
 
 %files
 %{_bindir}/%{name}
@@ -44,5 +50,7 @@ install -m 0755 %{name} %{buildroot}%{_bindir}/%{name}
 %license LICENSE
 
 %changelog
+* Fri Apr 25 2025 Theomund <34360334+theomund@users.noreply.github.com> - 3.11.2-2
+- Build directly from the source code.
 * Wed Apr 23 2025 Theomund <34360334+theomund@users.noreply.github.com> - 3.11.2-1
 - Initial package.

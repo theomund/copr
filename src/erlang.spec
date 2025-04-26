@@ -33,7 +33,7 @@ BuildRequires: gcc make ncurses-devel openssl-devel perl sed unixODBC-devel
 
 %build
 export ERL_TOP=$(pwd)
-%configure --prefix=%{_prefix} --with-ssl-rpath=no
+%configure --with-ssl-rpath=no
 %make_build
 
 %check

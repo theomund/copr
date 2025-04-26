@@ -22,7 +22,7 @@ build: (rpm "erlang") (rpm "gleam") (rpm "limine") (rpm "vale")
 
 # Clean the project tree.
 clean:
-    git clean -fdx
+    rm -rf target/
 
 # Submit a build within COPR.
 copr package: (srpm package)
