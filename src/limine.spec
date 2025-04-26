@@ -38,7 +38,7 @@ BuildRequires: gawk gcc grep gzip make mtools nasm sed
 %check
 
 %install
-make install-strip DESTDIR=%{buildroot} PREFIX=%{_prefix}
+%make_install install-strip
 
 %files
 %{_bindir}/%{name}
