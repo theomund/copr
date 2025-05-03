@@ -18,23 +18,14 @@ FROM quay.io/fedora/fedora:42
 RUN dnf copr enable -y theomund/copr
 RUN dnf install -y \
     bash-completion-2.16 \
-    cargo-1.86.0 \
     copr-cli-2.1 \
-    gcc-15.0.1 \
     git-2.49.0 \
-    golang-1.24.2 \
     just-1.40.0 \
-    make-4.4.1 \
-    mtools-4.0.48 \
-    nasm-2.16.03 \
-    ncurses-devel-6.5 \
-    openssl-devel-3.2.4 \
-    perl-5.40.2 \
+    mock-6.1 \
     rpmdevtools-9.6 \
     rpmlint-2.7.0 \
-    unixODBC-devel-2.3.12 \
     vale-3.11.2 \
     yamllint-1.37.0 \
     && dnf clean all
-RUN useradd -m developer
+RUN useradd -m -G mock developer
 USER developer

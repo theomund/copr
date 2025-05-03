@@ -15,10 +15,10 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 # Run all CI/CD stages.
-all: lint build
+all: lint build verify
 
 # Build the project packages.
-build: (rpm "erlang") (rpm "gleam") (rpm "limine") (rpm "vale")
+build: (rpm "limine") (rpm "vale")
 
 # Clean the project tree.
 clean:
@@ -26,38 +26,37 @@ clean:
 
 # Submit a build within COPR.
 copr package: (srpm package)
-    copr-cli build theomund/copr target/SRPMS/{{ package }}-*.src.rpm
+    copr-cli build theomund/copr target/{{ package }}/srpm/*.src.rpm
 
 # Deploy the project packages.
-deploy: (copr "erlang") (copr "gleam") (copr "limine") (copr "vale")
+deploy: (copr "limine") (copr "vale")
 
 # Run the project linters.
-lint: rpmlint vale yamllint
+lint: vale yamllint
 
 # Build an RPM package.
 rpm package: (srpm package)
-    rpmbuild --rebuild --define "_topdir $(pwd)/target" target/SRPMS/{{ package }}-*.src.rpm
+    mock --rebuild --resultdir target/{{ package }}/rpm target/{{ package }}/srpm/*.src.rpm
 
 # Run the RPM linter.
-rpmlint:
-    rpmlint src/
+rpmlint package: (rpm package)
+    rpmlint target/{{ package }}/rpm/*.rpm
 
 # Retrieve the RPM source archive.
-source package: setup
-    spectool -Rg --define "_topdir $(pwd)/target" src/{{ package }}.spec
+source package:
+    spectool -gC target/{{ package }}/source src/{{ package }}.spec
 
 # Build a source RPM package.
 srpm package: (source package)
-    rpmbuild -bs --define "_topdir $(pwd)/target" src/{{ package }}.spec
-
-# Setup the RPM build tree.
-setup:
-    mkdir -p target/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+    mock --buildsrpm --resultdir target/{{ package }}/srpm --sources target/{{ package }}/source --spec src/{{ package }}.spec
 
 # Run the prose linter.
 vale:
     vale sync
     vale README.md
+
+# Verify the RPM package quality.
+verify: (rpmlint "limine") (rpmlint "vale")
 
 # Run the YAML linter.
 yamllint:
