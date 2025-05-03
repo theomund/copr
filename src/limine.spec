@@ -16,17 +16,22 @@
 
 Name:          limine
 Version:       9.2.3
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Modern, advanced, portable, multiprotocol bootloader and boot manager
 URL:           https://%{name}-bootloader.org
 Source:        https://github.com/%{name}-bootloader/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
 License:       BSD-2-Clause
 BuildRequires: gawk gcc grep gzip make mtools nasm sed
 
+%global common_description %{expand:
+Limine is a modern, advanced, portable, multiprotocol bootloader and boot
+manager, also used as the reference implementation for the Limine boot
+protocol.}
+
 %global debug_package %{nil}
 
 %description
-%{summary}
+%{common_description}
 
 %prep
 %autosetup -n %{name}-%{version}
@@ -46,6 +51,8 @@ BuildRequires: gawk gcc grep gzip make mtools nasm sed
 %{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Sat May 03 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.3-3
+- Update the package descriptions.
 * Fri Apr 25 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.3-2
 - Build directly from the source code.
 * Wed Apr 23 2025 Theomund <34360334+theomund@users.noreply.github.com> - 9.2.3-1
@@ -62,7 +69,7 @@ BuildRequires: gawk gcc grep gzip make mtools nasm sed
 Summary: %{summary}
 
 %description devel
-%{summary}
+%{common_description}
 
 %files devel
 %{_includedir}/%{name}.h

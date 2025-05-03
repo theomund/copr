@@ -12,7 +12,5 @@
             ]
         }
     },
-    "securityOpt": [
-        "label=disable"
-    ]
+    "privileged": true
 }
